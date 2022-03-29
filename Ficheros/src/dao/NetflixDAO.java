@@ -29,7 +29,7 @@ public class NetflixDAO {
 		}
 	   
 	   public static ArrayList<Show> getAll() {
-			final String QUERY = "SELECT show_id, tipo, title, director, cast, country,  "
+			final String QUERY = "SELECT show_id, tipo, title, director, cast, country, date_added, release_year, rating, duration, listed_in, descripcion "
 					+ "FROM shows order by show_id";
 			var coso = new ArrayList<Show>();
 			try {
@@ -37,13 +37,19 @@ public class NetflixDAO {
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(QUERY);
 				while (rs.next()) {
-					var num = rs.getInt("IdPoke");
-					var nombre = rs.getString("NombrePoke");
-					var peso = rs.getDouble("Peso");
-					var altura = rs.getDouble("Altura");
-					var tipo = rs.getString("ID_Tipo");
-					var tipo2 = rs.getString("ID_Tipo2");
-					Show a = new Show();
+					var show_id = rs.getString("show_id");
+					var tipo = rs.getString("tipo");
+					var title = rs.getString("title");
+					var director = rs.getString("director");
+					var cast = rs.getString("cast");
+					var country = rs.getString("country");
+					var date_added = rs.getString("date_added");
+					var release_year = rs.getString("release_year");
+					var rating = rs.getString("rating");
+					var duration = rs.getString("duration");
+					var listed_in = rs.getString("listed_in");
+					var descripcion = rs.getString("descripcion");
+					Show a = new Show(show_id,tipo,title,director,cast,country,date_added, release_year,rating,duration,listed_in,descripcion);
 					coso.add(a);
 				}
 			} catch (SQLException e) {

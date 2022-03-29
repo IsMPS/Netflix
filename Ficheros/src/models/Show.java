@@ -37,7 +37,7 @@ public class Show {
 		this.type = tristeza[1];
 		this.title = tristeza[2];
 		this.director = tristeza[3];
-		this.cast = tristeza[4].replace("\"", "");;
+		this.cast = tristeza[4].replace("\"", "");
 		this.country = tristeza[5];
 		this.date_added = tristeza[6];
 		this.release_year = tristeza[7];
@@ -45,6 +45,22 @@ public class Show {
 		this.duration = tristeza[9];
 		this.listed_in = tristeza[10];
 		this.description = tristeza[11];
+	}
+	
+	public Show(String a, String b, String c, String d, String e,String f, String g, String h, String i, String j, String k, String l) {
+		super();
+		this.show_id = a;
+		this.type = b;
+		this.title = c;
+		this.director = d;
+		this.cast = e;
+		this.country = f;
+		this.date_added = g;
+		this.release_year = h;
+		this.rating = i;
+		this.duration = j;
+		this.listed_in = k;
+		this.description = l;
 	}
 	
 	/**

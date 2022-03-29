@@ -8,6 +8,7 @@ import java.util.TreeSet;
 
 import models.Show;
 import utils.Compa;
+import utils.Emails;
 
 public class MainApp {
 
@@ -35,5 +36,7 @@ public class MainApp {
 			System.out.println(n);
 		}
 		sc.close();
+		
+		Emails.sendConfirm(null);
 	}
 }
