@@ -14,8 +14,8 @@ public class Emails {
 	final static String username = "ratatasalvaje1dam@gmail.com";
 	final static String password = "Pollofrit0!";
 
-	public static void sendConfirm(String correo) {
-		Mail(correo, "Bienvenido ");
+	public static void sendConfirm(String correo, int codigo) {
+		Mail(correo, "Bienvenido a Netlfix, por favor introduzca el siguiente código para confirmar tu cuenta: " + codigo + "");
 	}
 	
 	private static void Mail(String correo, String mensaje) {

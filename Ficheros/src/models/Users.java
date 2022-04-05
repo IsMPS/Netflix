@@ -6,14 +6,41 @@ public class Users {
 	String user;
 	String correo;
 	String password;
-	int codVerifica;
 	
-	public Users(int idC, String user, String correo, String password, int codVerifica) {
-		this.idC=idC;
+	public Users(String user, String correo, String password) {
 		this.user=user;
 		this.correo=correo;
 		this.password=password;
-		this.codVerifica=codVerifica;
 	}
+
+	/**
+	 * @return the idC
+	 */
+	public int getIdC() {
+		return idC;
+	}
+
+	/**
+	 * @return the user
+	 */
+	public String getUser() {
+		return user;
+	}
+
+	/**
+	 * @return the correo
+	 */
+	public String getCorreo() {
+		return correo;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+	
+	
 
 }

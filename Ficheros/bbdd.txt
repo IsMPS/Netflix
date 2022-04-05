@@ -1,0 +1,25 @@
+create database netflix;
+
+use netflix;
+
+create table shows (
+show_id varchar(10) primary key,
+tipo varchar(45),
+title varchar(60),
+director varchar(45),
+cast text,
+country	varchar(45), 
+date_added varchar(30),
+release_year varchar(4),
+rating varchar(10),
+duration varchar(30),
+listed_in varchar(60),
+descripcion text
+);
+
+create table cuentas (
+idC int primary key auto_increment,
+user varchar(30),
+correo varchar(60),
+pass varchar(45)
+);

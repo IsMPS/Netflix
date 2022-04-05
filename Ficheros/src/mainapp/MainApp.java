@@ -37,6 +37,6 @@ public class MainApp {
 		}
 		sc.close();
 		
-		Emails.sendConfirm(null);
+//		Emails.sendConfirm();
 	}
 }
