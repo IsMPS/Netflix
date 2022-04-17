@@ -17,6 +17,10 @@ public class UserDAO {
 	static final String PASS = "UnPatitoEnElAgua";
 	static final String QUERY = "SELECT * FROM shows";
 	
+	/**
+	 * Insertar un usuario en la bbdd
+	 * @param a Usuario
+	 */
 	   public static void insert(Users a) {
 		   try{
 			   Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -30,25 +34,15 @@ public class UserDAO {
 			      } 
 		}
 	   
-	   public static void Consulta() {
-		      // Open a connection
-		      try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-		         Statement stmt = conn.createStatement();
-		         ResultSet rs = stmt.executeQuery(QUERY);
-		      ) {		      
-		         while(rs.next()){
-		            //Display values
-		            System.out.print("user: " + rs.getInt("user"));
-		            System.out.print(", pass: " + rs.getInt("pass"));
-		         }
-		      } catch (SQLException e) {
-		         e.printStackTrace();
-		      } 
-		   }
-		   
-		   public static boolean login(String correo, String pass) {
+		   /**
+		    * Login, para acceder a la cuenta
+		    * @param usu
+		    * @param pass
+		    * @return 
+		    */
+		   public static boolean login(String usu, String pass) {
 			   final String QUERY = "SELECT  user, pass FROM cuentas " +
-					   				"where user = '" + correo + "' AND " +
+					   				"where user = '" + usu + "' AND " +
 					   				"pass = '" + pass + "' ;";
 			   try{
 				   Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -61,6 +55,24 @@ public class UserDAO {
 			   return false;
 		   }
 		   
+		   /**
+		    * Buscar usuarios dentro de la bbdd
+		    * @param usu
+		    */
+		   public static String usuario(String correo) {
+			   final String QUERY = "SELECT correo,pass FROM cuentas " +
+					   				"where correo = '" + correo + "';";
+			   try{
+				   Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				   Statement stmt = conn.createStatement();
+				   ResultSet rs = stmt.executeQuery(QUERY);
+				   rs.next();
+				   return rs.getString("pass");
+				      } catch (SQLException e) {
+				         e.printStackTrace();
+				      }
+			   return "No hay cuenta";
+		   }
 		   
 		   public static boolean consultaN(String username) {
 			   final String QUERY = "SELECT  user FROM cuentas " +
@@ -70,10 +82,10 @@ public class UserDAO {
 				   Statement stmt = conn.createStatement();
 				   ResultSet rs = stmt.executeQuery(QUERY);		      
 				   return rs.next();
-				      } catch (SQLException e) {
-				         e.printStackTrace();
-				      } 
-			   return false;
+			      } catch (SQLException e) {
+			         e.printStackTrace();
+			      } 
+		   return false;
 		   }
 		   
 		   public static void borrar(String username) {
@@ -86,15 +98,14 @@ public class UserDAO {
 				      } 
 		   }
 		   
-		   public static String cambiar(String username, String newuser) {
+		   public static void cambiar(String user, String newPass) {
 			   try{
 				   Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-				   PreparedStatement stmt = conn.prepareStatement("update cuentas set user = '"+ newuser+"' where user = '"+ username +"' ;");
+				   PreparedStatement stmt = conn.prepareStatement("update cuentas set pass = '"+ newPass+"' where user = '"+ user +"';");
 				   stmt.executeUpdate();
 				      } catch (SQLException e) {
 				         e.printStackTrace();
 				      } 
-			   return newuser;
 		   }
 		   
 		   public static void register(Users a) {
@@ -110,4 +121,40 @@ public class UserDAO {
 				      } 
 		   }
 	   
+		   public static void meterFavoritos(String idShow, String user) {
+			   try{
+				   Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				   PreparedStatement stmt = conn.prepareStatement("insert into favoritos (user,idShow) values (?,?)");
+				   stmt.setString(1, user);
+				   stmt.setString(2, idShow);
+				   stmt.executeUpdate();
+				      } catch (SQLException e) {
+				         e.printStackTrace();
+				      } 
+		   }
+		   
+		   public static void borrarFavoritos(String idShow, String user) {
+			   try{
+				   Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				   PreparedStatement stmt = conn.prepareStatement("delete from favoritos where idShow = '"+ idShow +"' and user = '"+ user +"';");
+				   stmt.executeUpdate();
+				      } catch (SQLException e) {
+				         e.printStackTrace();
+				      } 
+		   }
+		   
+		   public static boolean consultaFav(String username, String show) {
+			   final String QUERY = "SELECT  user, idShow FROM favoritos " +
+					   				"where user = '" + username+ "' and idShow = '" + show + "' ;";
+			   try{
+				   Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				   Statement stmt = conn.createStatement();
+				   ResultSet rs = stmt.executeQuery(QUERY);		      
+				   return rs.next();
+			      } catch (SQLException e) {
+			         e.printStackTrace();
+			      } 
+		   return false;
+		   }
+		   
 }

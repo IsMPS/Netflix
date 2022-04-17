@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeSet;
 
+import dao.NetflixDAO;
 import models.Show;
-import utils.Compa;
-import utils.Emails;
+import views.MenuPrincipal;
 
 public class MainApp {
-
+	
 	public static void main(String[] args) {
-		TreeSet<Show> show = new TreeSet<Show>(new Compa());
-//		ArrayList<Show> show = new ArrayList<Show>();
+		/**
+		ArrayList<Show> show = new ArrayList<Show>();
 		File f = new File("netflix_titles.csv");
 		Scanner sc = null;
 		try {
@@ -22,7 +22,8 @@ public class MainApp {
 			sc.nextLine();
 			while (sc.hasNextLine()) {
 				String s = sc.nextLine();
-				s = s.replace(",,", ",null,");
+				s = s.replace(",,", ",desconocido,");
+				s = s.replace("'", " ");
 				String[] info = s.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 				Show m = new Show(info);
 				show.add(m);
@@ -33,10 +34,11 @@ public class MainApp {
 		}
 
 		for (Show n : show) {
-			System.out.println(n);
-		}
+			NetflixDAO.insert(n);
+		} 
 		sc.close();
+		*/
+		new MenuPrincipal();
 		
-//		Emails.sendConfirm();
 	}
 }

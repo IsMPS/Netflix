@@ -17,6 +17,8 @@ public class Show {
 	private String duration;
 	private String listed_in;
 	private String description;
+	private boolean favorito;
+	
 	/**
 	 * @param show_id
 	 * @param type
@@ -45,6 +47,7 @@ public class Show {
 		this.duration = tristeza[9];
 		this.listed_in = tristeza[10];
 		this.description = tristeza[11];
+		favorito=false;
 	}
 	
 	public Show(String a, String b, String c, String d, String e,String f, String g, String h, String i, String j, String k, String l) {
@@ -61,6 +64,24 @@ public class Show {
 		this.duration = j;
 		this.listed_in = k;
 		this.description = l;
+		favorito=false;
+	}
+	
+	public Show(String a, String b, String c, String d, String e,String f, String g, String h, String i, String j, String k, String l, boolean fav) {
+		super();
+		this.show_id = a;
+		this.type = b;
+		this.title = c;
+		this.director = d;
+		this.cast = e;
+		this.country = f;
+		this.date_added = g;
+		this.release_year = h;
+		this.rating = i;
+		this.duration = j;
+		this.listed_in = k;
+		this.description = l;
+		favorito=fav;
 	}
 	
 	/**
@@ -146,6 +167,18 @@ public class Show {
 	public String getID() {
 		return show_id;
 	}
+	
+	/**
+	 * @return si está en favoritos o no
+	 */
+	public boolean getFavorito() {
+		return this.favorito;
+	}
+
+	public void setFavorito(boolean nuevoFav) {
+		this.favorito=nuevoFav;
+	}
+	
 	
 	@Override
 	public String toString() {

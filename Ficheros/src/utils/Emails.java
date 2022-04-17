@@ -15,7 +15,11 @@ public class Emails {
 	final static String password = "Pollofrit0!";
 
 	public static void sendConfirm(String correo, int codigo) {
-		Mail(correo, "Bienvenido a Netlfix, por favor introduzca el siguiente código para confirmar tu cuenta: " + codigo + "");
+		Mail(correo, "Bienvenido a Netlfix, por favor introduzca el siguiente código para confirmar su cuenta: " + codigo + "");
+	}
+	
+	public static void sendNoContra(String correo, String codigo) {
+		Mail(correo, "Su contraseña es: " + codigo + "");
 	}
 	
 	private static void Mail(String correo, String mensaje) {

@@ -1,16 +1,20 @@
 package models;
 
+import java.util.ArrayList;
+
 public class Users {
 	
-	int idC;
-	String user;
-	String correo;
-	String password;
+	private int idC;
+	private String user;
+	private String correo;
+	private String password;
+	private ArrayList<Show> shows;
 	
 	public Users(String user, String correo, String password) {
 		this.user=user;
 		this.correo=correo;
 		this.password=password;
+		shows = new ArrayList<Show>();
 	}
 
 	/**
@@ -41,6 +45,12 @@ public class Users {
 		return password;
 	}
 	
+	public void setFavorito(Show a) {
+		shows.add(a);
+	}
 	
+	public void borrarFav(Show a) {
+		shows.remove(a);
+	}
 
 }
