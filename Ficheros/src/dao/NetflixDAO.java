@@ -28,9 +28,9 @@ public class NetflixDAO {
 			}
 		}
 	   
-	   public static Show consultaS(int show) {
+	   public static Show consultaS(String string) {
 		   final String QUERY = "SELECT show_id, tipo, title, director, cast, country, date_added, release_year, rating, duration, listed_in, descripcion "
-					+ "FROM shows where show_id = 's"+show+ "' ;";
+					+ "FROM shows where show_id = '"+string+ "' ;";
 		   try{
 			   Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			   Statement stmt = conn.createStatement();

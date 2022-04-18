@@ -26,7 +26,6 @@ public class Netflix {
 
 	private JFrame frame;
 	private JTextField txtBuscador;
-	private boolean fav;
 	private Users usuarioDentro;
 	private Show show;
 	private int n;
@@ -37,7 +36,6 @@ public class Netflix {
 	 * Create the application.
 	 */
 	public Netflix(Users usu, int n, String condicion) {
-		fav = false;
 		this.condicion = condicion;
 		usuarioDentro = usu;
 
@@ -97,7 +95,6 @@ public class Netflix {
 			public void actionPerformed(ActionEvent e) {
 				if (!UserDAO.consultaFav(usuarioDentro.getUser(), show.getID())) {
 					UserDAO.meterFavoritos(show.getID(), usuarioDentro.getUser());
-					Ficheros.insertarFav(show, ',');
 					btnNewButton.setBackground(new Color(100, 0, 0));
 				} else if (UserDAO.consultaFav(usuarioDentro.getUser(), show.getID())) {
 					UserDAO.borrarFavoritos(show.getID(), usuarioDentro.getUser());
@@ -176,20 +173,20 @@ public class Netflix {
 	public void avanzar() {
 		if (shows.size() - 1 == n) {
 			new Netflix(usuarioDentro, 0, txtBuscador.getText());
-			frame.dispose();
+			frame.setVisible(false);
 		} else {
 			new Netflix(usuarioDentro, n + 1, txtBuscador.getText());
-			frame.dispose();
+			frame.setVisible(false);
 		}
 	}
 
 	public void retroceder() {
 		if (show.getID().equals("s1")) {
 			new Netflix(usuarioDentro, shows.size() - 1, txtBuscador.getText());
-			frame.dispose();
+			frame.setVisible(false);
 		} else {
 			new Netflix(usuarioDentro, n - 1, txtBuscador.getText());
-			frame.dispose();
+			frame.setVisible(false);
 		}
 	}
 
