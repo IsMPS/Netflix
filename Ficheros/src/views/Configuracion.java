@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,10 +13,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import dao.NetflixDAO;
 import dao.UserDAO;
+import models.Show;
+import utils.Ficheros;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.Font;
 
 public class Configuracion {
 
@@ -29,6 +34,10 @@ public class Configuracion {
 	private JButton btnBorrar;
 	private JButton btnSalirCon;
 	private JButton btnSalirCambName;
+	private JTextField textDelimiter;
+	private JButton btnAbrirDel;
+	private JPanel panel_1;
+	private ArrayList<Show> shows = new ArrayList<Show>();
 
 	/**
 	 * Create the application.
@@ -36,6 +45,7 @@ public class Configuracion {
 	public Configuracion(JFrame parent, String user) {
 		this.julioiglesias=parent;
 		this.user = user;
+		shows = NetflixDAO.getAll();
 		initialize();
 	}
 
@@ -51,7 +61,7 @@ public class Configuracion {
 		
 		panel = new JPanel();
 		panel.setBackground(new Color(178, 34, 34));
-		this.panel.setBounds(177, 225, 340, 244);
+		this.panel.setBounds(177, 200, 340, 269);
 		frame.getContentPane().add(panel);
 		this.panel.setLayout(null);
 		
@@ -88,6 +98,34 @@ public class Configuracion {
 		panel.add(btnSalirCambName);
 		panel.setVisible(false);
 		
+		panel_1 = new JPanel();
+		panel_1.setBounds(177, 200, 340, 269);
+		frame.getContentPane().add(panel_1);
+		panel_1.setLayout(null);
+		
+		textDelimiter = new JTextField();
+		textDelimiter.setBounds(109, 77, 141, 20);
+		panel_1.add(textDelimiter);
+		textDelimiter.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Delimitador");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setBounds(21, 78, 89, 14);
+		panel_1.add(lblNewLabel);
+		
+		JButton btnNewButton = new JButton("Crear");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				crearFichero();
+			}
+		});
+		btnNewButton.setBounds(129, 172, 89, 23);
+		panel_1.add(btnNewButton);
+		
+		JLabel lblNewLabel_1 = new JLabel("Crea tu propio fichero de favoritos, solo se tendra"+"\n"+"en cuenta el primer caracter");
+		lblNewLabel_1.setBounds(10, 29, 320, 37);
+		panel_1.add(lblNewLabel_1);
+		
 		btnSalirCon = new JButton("Atr\u00E1s");
 		btnSalirCon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -121,11 +159,47 @@ public class Configuracion {
 		btnBorrar.setBounds(280, 369, 139, 23);
 		frame.getContentPane().add(btnBorrar);
 		
+		btnAbrirDel = new JButton("Crear fichero");
+		btnAbrirDel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cambiarDel();
+			}
+		});
+		btnAbrirDel.setBounds(280, 301, 139, 23);
+		frame.getContentPane().add(btnAbrirDel);
+		panel_1.setVisible(false);
 		frame.setVisible(true);
+	}
+	
+	public void cambiarDel() {
+		btnCambiar.setVisible(false);
+		btnSalirCon.setVisible(false);
+		btnBorrar.setVisible(false);
+		btnAbrirDel.setVisible(false);
+		panel_1.setVisible(true);
+	}
+	
+	public void crearFichero() {
+		char del = textDelimiter.getText().charAt(0);
+		if(!textDelimiter.getText().isEmpty()) {
+			for (int i = 0; i < shows.size()-1; i++) {
+				if(UserDAO.consultaFav(user, shows.get(i).getID())) {
+					Ficheros.insertarFav(shows.get(i), del);
+				}	
+			}
+				panel_1.setVisible(false);
+				btnAbrirDel.setVisible(true);
+				btnCambiar.setVisible(true);
+				btnSalirCon.setVisible(true);
+				btnBorrar.setVisible(true);
+		}else {
+			JOptionPane.showMessageDialog(null, "Introduce un nombre");
+		}
 	}
 	
 	public void cambiarUser() {
 		btnCambiar.setVisible(false);
+		btnAbrirDel.setVisible(false);
 		btnSalirCon.setVisible(false);
 		btnBorrar.setVisible(false);
 		panel.setVisible(true);
@@ -136,6 +210,7 @@ public class Configuracion {
 		if(!newpass.isEmpty()) {
 				UserDAO.cambiar(user,newpass);
 				panel.setVisible(false);
+				btnAbrirDel.setVisible(true);
 				btnCambiar.setVisible(true);
 				btnSalirCon.setVisible(true);
 				btnBorrar.setVisible(true);
@@ -151,5 +226,4 @@ public class Configuracion {
 		new MenuPrincipal();
 		}
 	}
-
 }

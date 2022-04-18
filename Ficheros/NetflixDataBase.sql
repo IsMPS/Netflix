@@ -1,3 +1,5 @@
+create database netflix;
+
 use netflix;
 
 create table shows (

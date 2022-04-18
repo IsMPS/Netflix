@@ -33,7 +33,8 @@ public class Ficheros {
 			if (sc.hasNextLine()) {
 				while (sc.hasNextLine()) {
 					String sa = sc.nextLine();
-					if (sa.equals(s)) {
+					String[] info = sa.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);	
+					if (info[0].equals(a.getID())) {
 						creado = true;
 					}
 				}
@@ -48,7 +49,6 @@ public class Ficheros {
 			}
 			sc.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
